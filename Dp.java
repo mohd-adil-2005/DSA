@@ -259,12 +259,34 @@ public static void printArr(int dp[][]){
   return s2;
         
     }
+
+
+    public static int editdistance(String s1, String  s2, int n , int m ){
+         
+      //base caes 
+      if(n==0|| m==0){
+        return 0;
+      }
+      
+      if(s1.charAt(n-1)==s2.charAt(m-1)){
+        return  editdistance(s1,s2,n-1,m-1);  
+      }
+
+      else{
+     int add = 1+editdistance(s1, s2, n, m-1);
+     int delete= 1+editdistance(s1, s2, n-1, m);
+     int replace= 1+editdistance(s1, s2, n-1, m-1);
+     return Math.min(add,Math.min(delete,replace));
+       
+      }
+
+    }
     
     public static void main(String[] args){
      
         
-        String s1 ="adil";
-        String s2="adil";
+        String s1 ="intention";
+        String s2="execution";
         int n= s1.length();
     int m= s2.length();
 
@@ -276,7 +298,7 @@ public static void printArr(int dp[][]){
             }
          }
      }
-         System.out.println("Maximum length of common substring find karna  hai okay now okay: " +  substring(s1,s2,n,m, dp));
+         System.out.println("Maximum length of common substring find karna  hai okay now okay: " +  editdistance(s1,s2,n,m));
         System.out.println("this is recersed strings are: " + longestPalindromeSubseq(s1));
 
     }
