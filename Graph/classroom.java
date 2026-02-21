@@ -20,13 +20,15 @@ public class Classroom{
             graph[i]= new ArrayList<>();
         }
         graph[0].add(new Edge(0,1,5));
-        graph[1].add(new Edge(1,2,1));
-        graph[1].add(new Edge(1,3,3));
-        graph[2].add(new Edge(2,1,1));
-        graph[2].add(new Edge(2,3,1));
-        graph[3].add(new Edge(3,1,3));
-        graph[3].add(new Edge(3,2,1));
-        graph[4].add(new Edge(4,2,2));
+        graph[0].add(new Edge(0,2,1));
+
+        graph[1].add(new Edge(1,0,3));
+        graph[1].add(new Edge(1,3,1));
+        graph[2].add(new Edge(2,0,1));
+        graph[2].add(new Edge(2,3,3));
+        
+        graph[3].add(new Edge(3,1,1));
+        graph[3].add(new Edge(3,2,2));
     }
 
 
@@ -56,12 +58,49 @@ public class Classroom{
                 }
              }
     }
+
+
+
+    // is bipartite Graph
+    public static boolean isBipartite(ArrayList<Edge> [] graph){
+           int col[]= new int[graph.length];
+           Arrays.fill(col, -1);
+           Queue<Integer> q= new LinkedList<>();
+           for(int i=0; i<graph.length; i++){
+            if(col[i]==-1){
+                col[i]=0;
+                q.add(i);
+                while(!q.isEmpty()){
+                    int curr = q.remove();
+                    for(int j=0; j<graph[curr].size(); j++){
+                         Edge e = graph[curr].get(j);
+                         if(col[e.dest]==col[curr]){
+                            return false;
+                         }
+
+                         //we have to assign the color actually here  
+                         if(col[e.dest]==-1){
+                            int colnext= col[curr];
+                            if(colnext==0){
+                                col[e.dest]=1;
+                            }else{
+                                col[e.dest]=0;
+                            }
+                         }
+
+                    }
+                }
+            }
+           }
+           return true;
+    }
     public static void main(String[] args){
         System.out.println("Hello, Graph");
-        int v=5;
+        int v=4;
         @SuppressWarnings("unchecked")
        ArrayList<Edge>[] graph = new ArrayList[v];
         createGraph(graph);
         BfsAlgo(graph);
+        System.out.println("the Graph that is given is Bipartite:"+isBipartite(graph));
     }
 }
