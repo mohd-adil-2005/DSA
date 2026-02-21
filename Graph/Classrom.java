@@ -29,5 +29,11 @@ public class Classrom{
         graph[3].add(new Edge(3,1,3));
         graph[3].add(new Edge(3,2,1));
         graph[4].add(new Edge(4,2,2));
+
+
+        for(int i=0; i<graph[4].size(); i++){
+            Edge e = graph[4].get(i);
+            System.out.println(e.dest );
+        }
     }
 }
