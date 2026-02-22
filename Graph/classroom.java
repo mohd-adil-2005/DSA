@@ -52,15 +52,18 @@ public class Classroom{
         // graph[0].add(new Edge(0,1,5));
         // graph[0].add(new Edge(0,2,1));
 
-          graph[5].add(new Edge(5, 0, 1));
-        graph[5].add(new Edge(5, 2, 1));
+        graph[0].add(new Edge(0, 1, 10));
+        graph[0].add(new Edge(0, 2, 15));
 
-        graph[4].add(new Edge(4, 0, 1));
-        graph[4].add(new Edge(4, 1, 1));
+        graph[1].add(new Edge(0, 0, 10));
+        graph[1].add(new Edge(0, 3, 40));
 
-        graph[2].add(new Edge(2, 3, 1));
+        graph[2].add(new Edge(2, 0, 15));
 
-        graph[3].add(new Edge(3, 1, 1));
+        graph[2].add(new Edge(2, 3, 50));
+         graph[3].add(new Edge(3, 1, 40));
+
+        graph[3].add(new Edge(3, 2, 50));
     }
 
 
@@ -126,14 +129,72 @@ public class Classroom{
            }
            return true;
     }
+    public static class pair implements Comparable<pair> {
+     int v;
+      int cost;
+      pair(int v, int cost){
+        this.v= v; 
+        this.cost= cost;
+      }
+      @Override
+      public int compareTo(pair p2){
+        return this.cost - p2.cost;
+      }
+
+
+    }
+
+
+    public static class EdgeList{
+        int v;
+        int cost;
+        EdgeList(int v, int cost){
+            this.v= v;
+            this.cost= cost;
+        } 
+
+
+    }
+
+    
+
+    public static void mst(ArrayList<Edge>[] graph){
+          boolean vis[]= new boolean[graph.length];
+           ArrayList<EdgeList> mstEdges= new ArrayList<>();
+          int costfinal=0;
+            PriorityQueue<pair> pq= new PriorityQueue<>();
+            pq.add(new pair(0, 0));
+              while(!pq.isEmpty()){
+                pair curr= pq.remove();
+                if(!vis[curr.v]){
+                    vis[curr.v]=true;
+                    costfinal+=curr.cost;
+                    mstEdges.add(new EdgeList(curr.v, curr.cost));
+
+                 for(int i=0; i<graph[curr.v].size(); i++){
+                    Edge e= graph[curr.v].get(i);
+                    pq.add(new pair(e.dest,e.w));
+                 }
+
+                }
+              }
+
+              for(int i=0; i<mstEdges.size(); i++){
+                  EdgeList e= mstEdges.get(i);
+                  System.out.println("Edge: " + e.v + " Cost: " + e.cost);
+              } 
+              System.out.println("the costs is that"+costfinal);
+
+    }
     public static void main(String[] args){
         System.out.println("Hello, Graph");
         int v=6;
         @SuppressWarnings("unchecked")
        ArrayList<Edge>[] graph = new ArrayList[v];
         createGraph(graph);
-        BfsAlgo(graph);
-        System.out.println("the Graph that is given is Bipartite:"+isBipartite(graph));
-        topsort(graph);
+        // BfsAlgo(graph);
+        // System.out.println("the Graph that is given is Bipartite:"+isBipartite(graph));
+        // topsort(graph);
+        mst(graph);
     }
 }
