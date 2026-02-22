@@ -54,6 +54,7 @@ public class Classroom{
 
         graph[0].add(new Edge(0, 1, 10));
         graph[0].add(new Edge(0, 2, 15));
+graph[0].add(new Edge(0, 3, 30));
 
         graph[1].add(new Edge(0, 0, 10));
         graph[1].add(new Edge(0, 3, 40));
@@ -64,6 +65,7 @@ public class Classroom{
          graph[3].add(new Edge(3, 1, 40));
 
         graph[3].add(new Edge(3, 2, 50));
+        graph[3].add(new Edge(3, 0, 30));
     }
 
 
