@@ -1,3 +1,4 @@
+import java.lang.classfile.instruction.ArrayStoreInstruction;
 import java.util.*;
 
 public class CarsNearby {
@@ -43,10 +44,51 @@ public class CarsNearby {
         }
 
 
+    
+
+          
+         public static void ConnectNropes(int ropes[]){
+        int totalCost=0;
+        PriorityQueue<Integer> pq= new PriorityQueue<>();
+        for(int i=0; i<ropes.length; i++){
+            pq.add(ropes[i]);
+        }
+        while(pq.size()>1){
+            int first= pq.remove();
+            int second= pq.remove();
+            int cost = first+second;
+            totalCost+=cost;
+            pq.add(cost);
+            System.out.println("Last cost to connect "+first+" and "+second+" is "+cost);
+        }
+        System.out.println("Total cost to connect ropes: " + totalCost);
+   }
+
+
+        
 
    public static void main(String args[]){
 
    int points[][]={{3,3},{5,-1},{-2,4}};
+   int ropes[]= {2,3,3,4,6};
+   ConnectNropes(ropes);
+   PriorityQueue<Integer> pq= new PriorityQueue<>();
+   ArrayList<Integer> list= new ArrayList<>();
+   for(int i=0; i<ropes.length; i++){
+    pq.add(ropes[i]);
+   }
+   Arrays.sort(ropes);
+   int outside= ropes[0];
+   for(int i=1; i<ropes.length; i++){
+        int sum= outside+ropes[i];
+        list.add(sum);
+        outside= sum;
+   }  int sum2=0;
+   for(int i=0; i<list.size(); i++){
+       sum2+= list.get(i);
+   }
+   System.out.println("this is the sum is here of the n ropes connect "+sum2);
+
    int k=2;
    NearbyCar(points, k);
 
